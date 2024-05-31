@@ -1,6 +1,7 @@
 #include <Windows.h>
 #include <tchar.h>
-//#include "sp_pr3.h"
+#include "resource.h"
+#include "sp_pr3.h"
 
 //Прототип
 LRESULT CALLBACK Pr2_WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -30,7 +31,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 	wc.lpfnWndProc = Pr2_WndProc;
 	wc.style = CS_HREDRAW | CS_VREDRAW;
 	wc.hInstance = hInstance;
-	wc.hIcon = LoadIcon(NULL, IDI_ASTERISK);
+	wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = hbr;
 	wc.lpszMenuName = NULL;
