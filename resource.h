@@ -2,7 +2,9 @@
 // Включаемый файл, созданный в Microsoft Visual C++.
 // Используется sp_pr3.rc
 //
+#define IDC_POINTER                     104
 #define IDI_ICON1                       105
+#define IDC_NODROP                      106
 
 // Next default values for new objects
 // 

@@ -32,7 +32,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 	wc.style = CS_HREDRAW | CS_VREDRAW;
 	wc.hInstance = hInstance;
 	wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hCursor = LoadCursor(hInstance, MAKEINTRESOURCE(IDC_POINTER));
 	wc.hbrBackground = hbr;
 	wc.lpszMenuName = NULL;
 	wc.cbClsExtra = 0;
