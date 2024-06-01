@@ -211,10 +211,49 @@ LRESULT CALLBACK Pr2_WndProc(HWND hWnd, UINT msg,
 				DestroyWindow(hWnd);
 				break;
 
+			case IDM_FILE_OPEN:
+				MessageBox(hWnd, _T("Выбран пукт ''"), _T("Меню Файл"), MB_OK);
+				break;
+
+			case IDM_FILE_NEW:
+				MessageBox(hWnd, _T("Выбран пукт 'Создать'"), _T("Меню Файл"), MB_OK);
+				break;
+
+			case IDM_FILE_EXIT:
+				MessageBox(hWnd, _T("Выбран пукт 'Выход'"), _T("Меню Файл"), MB_OK);
+				DestroyWindow(hWnd);
+				break;
+
+			case IDM_EDIT_SELECT:
+				MessageBox(hWnd, _T("Выбран пукт 'Выбрать'"), _T("Меню Правка"), MB_OK);
+				break;
+
+			case IDM_EDIT_CUT:
+				MessageBox(hWnd, _T("Выбран пукт 'Вырезеать'"), _T("Меню Правка"), MB_OK);
+				break;
+
+			case IDM_EDIT_COPY:
+				MessageBox(hWnd, _T("Выбран пукт 'Копировать'"), _T("Меню Правка"), MB_OK);
+				break;
+
+			case IDM_EDIT_INSERT:
+				MessageBox(hWnd, _T("Выбран пукт 'Вставить'"), _T("Меню Правка"), MB_OK);
+				break;
+
+			case IDM_REF_HELP:
+				MessageBox(hWnd, _T("Выбран пукт 'Помощь'"), _T("Меню Справка"), MB_OK);
+				break;
+
+			case IDM_REF_ABOUT:
+				MessageBox(hWnd, _T("Выбран пукт 'О программе'"), _T("Меню Справка"), MB_OK);
+				break;
+
 			default:
+				TCHAR str[100] ;
+				wsprintf(str,TEXT("Команда с идентификатором %d не реализована"), wmId);
+				MessageBox(hWnd, str, _T("Неизвестно"), MB_OK);
 				return DefWindowProc(hWnd, msg, wParam, lParam);
 			}
-
 			break;
 		default:
 			return DefWindowProc(hWnd, msg, wParam, lParam);
