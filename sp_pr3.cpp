@@ -45,7 +45,9 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 		return false;
 	}
 
-	hWnd = CreateWindowEx(NULL, g_lpszClassName,
+	HMENU hMenu = LoadMenu(hInstance, MAKEINTRESOURCE(IDR_MENU1));
+
+	hWnd = CreateWindowExW(NULL, g_lpszClassName,
 		g_lpszAplicationTitle,
 		WS_OVERLAPPEDWINDOW & ~WS_MAXIMIZEBOX,
 		200, // X положение (X)
@@ -53,7 +55,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 		450, // Ширина (nWidth)
 		450, // Высота (nHeight)
 		NULL,
-		NULL,
+		hMenu,
 		hInstance,
 		NULL
 	);
@@ -64,6 +66,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 			TEXT("Ошибка при создании окна"), MB_OK | MB_ICONERROR);
 		return FALSE;
 	}
+
+	
+
+
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
