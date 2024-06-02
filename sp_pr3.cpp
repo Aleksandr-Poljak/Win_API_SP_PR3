@@ -164,43 +164,49 @@ LRESULT CALLBACK Pr2_WndProc(HWND hWnd, UINT msg,
 			break;
 		
 		case WM_CREATE:
-			MessageBox(hWnd, 
+		{
+			MessageBox(hWnd,
 				TEXT("Выполняется обработка WM_CREATE"), TEXT("Обработка WM_CREATE")
-				,MB_OK);
+				, MB_OK);
 
-			
-				hEdit = CreateWindowEx(0L, _T("Edit"), _T("Редактор"),
-					WS_CHILD | WS_BORDER | WS_VISIBLE | ES_LEFT | ES_AUTOHSCROLL,
-					20, 50, 160, 40, hWnd, 
-					(HMENU)IDC_EDIT1, 
-					g_hInst, NULL);
-				if (hEdit == 0) return -1;
+			hEdit = CreateWindowEx(0L, _T("Edit"), _T("Редактор"),
+				WS_CHILD | WS_BORDER | WS_VISIBLE | ES_LEFT | ES_AUTOHSCROLL,
+				20, 50, 160, 40, hWnd,
+				(HMENU)IDC_EDIT1,
+				g_hInst, NULL);
+			if (hEdit == 0) return -1;
 
-				hListBox = CreateWindowEx(0L, _T("ListBox"), _T("Список"),
-					WS_CHILD | WS_BORDER | WS_VISIBLE, 
-					200, 50, 160, 180, hWnd,
-					(HMENU)IDC_LISTBOX, g_hInst, NULL);
-				if (hListBox == 0) return -1;
+			hListBox = CreateWindowEx(0L, _T("ListBox"), _T("Список"),
+				WS_CHILD | WS_BORDER | WS_VISIBLE,
+				200, 50, 160, 180, hWnd,
+				(HMENU)IDC_LISTBOX, g_hInst, NULL);
+			if (hListBox == 0) return -1;
 
-				hButtonSave = CreateWindowEx(0L, _T("Button"), _T("В буфер"),
-					WS_CHILD | WS_BORDER | WS_VISIBLE, 
-					20, 240, 80, 24, hWnd,
-					(HMENU)IDC_BTN_SAVE, g_hInst, NULL);
-				if (hButtonSave == 0) return -1;
+			hButtonSave = CreateWindowEx(0L, _T("Button"), _T("В буфер"),
+				WS_CHILD | WS_BORDER | WS_VISIBLE,
+				20, 240, 80, 24, hWnd,
+				(HMENU)IDC_BTN_SAVE, g_hInst, NULL);
+			if (hButtonSave == 0) return -1;
 
-				hButtonAdd = CreateWindowEx(0L, _T("Button"), _T("В список"),
-					WS_CHILD | WS_BORDER | WS_VISIBLE, 
-					120, 240, 80, 24, hWnd,
-					(HMENU)IDC_BTN_ADD, g_hInst, NULL);
-				if (hButtonAdd == 0) return -1;
+			hButtonAdd = CreateWindowEx(0L, _T("Button"), _T("В список"),
+				WS_CHILD | WS_BORDER | WS_VISIBLE,
+				120, 240, 80, 24, hWnd,
+				(HMENU)IDC_BTN_ADD, g_hInst, NULL);
+			if (hButtonAdd == 0) return -1;
 
-				hButtonExit = CreateWindowEx(0L, _T("Button"), _T("Выход"),
-					WS_CHILD | WS_BORDER | WS_VISIBLE, 220, 240, 80, 24, hWnd,
-					(HMENU)IDCANCEL, g_hInst, NULL);
-				if (hButtonExit == 0) return -1;
-			
+			hButtonExit = CreateWindowEx(0L, _T("Button"), _T("Выход"),
+				WS_CHILD | WS_BORDER | WS_VISIBLE, 220, 240, 80, 24, hWnd,
+				(HMENU)IDCANCEL, g_hInst, NULL);
+			if (hButtonExit == 0) return -1;
+
+			#define IDM_FILE_CLOSE 1234
+			HMENU hMenuBar = GetMenu(hWnd);
+			HMENU hFileMenu = GetSubMenu(hMenuBar, 0);
+			InsertMenu(hFileMenu, 2, MF_BYPOSITION | MF_STRING, IDM_FILE_CLOSE, TEXT("Закрыть документ"));
+
 			return 0;
 			break;
+		}
 
 		case WM_COMMAND:
 			int wmId, wmEvent;
@@ -225,9 +231,9 @@ LRESULT CALLBACK Pr2_WndProc(HWND hWnd, UINT msg,
 					MessageBox(hWnd, Buff1, TEXT("Содержимое буфера"), MB_OK);
 					break;
 				}
-				
+
 			}
-			
+
 			case IDC_BTN_ADD: {
 				int ind = SendMessage(hListBox, LB_ADDSTRING, (WPARAM)0, (LPARAM)pszTextBuff);
 				if (ind == LB_ERR)
@@ -244,8 +250,12 @@ LRESULT CALLBACK Pr2_WndProc(HWND hWnd, UINT msg,
 				break;
 
 			case IDM_FILE_NEW:
+			{
 				MessageBox(hWnd, _T("Выбран пукт 'Создать'"), _T("Меню Файл"), MB_OK);
+				HMENU hMenu = GetMenu(hWnd);
+				EnableMenuItem(hMenu, IDM_EDIT_SELECT, MF_ENABLED);
 				break;
+			}
 
 			case IDM_FILE_EXIT:
 				MessageBox(hWnd, _T("Выбран пукт 'Выход'"), _T("Меню Файл"), MB_OK);
@@ -253,8 +263,12 @@ LRESULT CALLBACK Pr2_WndProc(HWND hWnd, UINT msg,
 				break;
 
 			case IDM_EDIT_SELECT:
-				MessageBox(hWnd, _T("Выбран пукт 'Выбрать' "), _T("Меню Правка"), MB_OK);
+			{
+				MessageBox(hWnd, _T("Выбран пукт 'Выделить' "), _T("Меню Правка"), MB_OK);
+				HMENU hMenu = GetMenu(hWnd);
+				EnableMenuItem(hMenu, IDM_EDIT_COPY, MF_ENABLED);
 				break;
+			}
 
 			case IDM_EDIT_CUT:
 				MessageBox(hWnd, _T("Выбран пукт 'Вырезеать'"), _T("Меню Правка"), MB_OK);
@@ -283,6 +297,16 @@ LRESULT CALLBACK Pr2_WndProc(HWND hWnd, UINT msg,
 			case IDA_ACCELERAT_T:
 				MessageBox(hWnd, _T("Нажата горячая клавиша 'T'"), _T("T"), MB_OK);
 				break;
+			
+			case IDM_FILE_CLOSE:
+			{
+					MessageBox(hWnd, _T("Выбран пукт 'Закрыть документ'"), _T("Меню Файл"), MB_OK);
+					HMENU hMenu = GetMenu(hWnd);
+					EnableMenuItem(hMenu, IDM_EDIT_COPY, MF_DISABLED);
+					EnableMenuItem(hMenu, IDM_EDIT_SELECT, MF_DISABLED);
+					EnableMenuItem(hMenu, IDM_EDIT_CUT, MF_DISABLED);
+					EnableMenuItem(hMenu, IDM_EDIT_INSERT, MF_DISABLED);
+			}
 
 			default:
 				TCHAR str[100] ;
