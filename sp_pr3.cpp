@@ -157,6 +157,45 @@ LRESULT CALLBACK Pr2_WndProc(HWND hWnd, UINT msg,
 			ReleaseDC(hWnd, hdc);
 			break;
 
+		case WM_RBUTTONDOWN:
+		{
+			SendMessage(hWnd, WM_CONTEXTMENU, wParam, lParam);
+			break;
+		}
+
+		case WM_CONTEXTMENU:
+		{	
+			// получаем позицию курсора
+			POINT pt;
+			GetCursorPos(&pt);
+			// Создаем плавающее меню
+			HMENU contextMenu = CreatePopupMenu();
+			AppendMenu(contextMenu, MF_STRING, IDM_EDIT_SELECT, TEXT("Выделить"));
+			AppendMenu(contextMenu, MF_STRING, IDM_EDIT_COPY, TEXT("Копировать"));
+
+			// получаем информацию о пунктах Копировать, Выделить основного меню.
+			MENUITEMINFO hMenuSelectInfo = { sizeof(MENUITEMINFO) };
+			MENUITEMINFO hMenuCopyInfo = { sizeof(MENUITEMINFO) };
+			hMenuSelectInfo.fMask = MIIM_STATE;
+			hMenuCopyInfo.fMask = MIIM_STATE;;
+			GetMenuItemInfo(GetMenu(hWnd), IDM_EDIT_SELECT,false, &hMenuSelectInfo);
+			GetMenuItemInfo(GetMenu(hWnd), IDM_EDIT_COPY, false, &hMenuCopyInfo);
+			
+			
+			//Меняем статус плавающего меню.					
+			EnableMenuItem(contextMenu, IDM_EDIT_SELECT, hMenuSelectInfo.fState);
+			EnableMenuItem(contextMenu, IDM_EDIT_COPY, hMenuCopyInfo.fState);
+			
+			// Отображаем плавающее меню
+			TrackPopupMenu(contextMenu, TPM_RIGHTBUTTON | TPM_TOPALIGN | TPM_LEFTALIGN,
+				pt.x,pt.y,
+				0, hWnd, NULL);
+			
+			DestroyMenu(contextMenu);
+			break;
+		}
+
+
 		case WM_PAINT:
 			hdc = BeginPaint(hWnd, &ps);
 			TextOut(hdc, 20, 100, messageWM_PAINT, lstrlen(messageWM_PAINT));
@@ -309,9 +348,9 @@ LRESULT CALLBACK Pr2_WndProc(HWND hWnd, UINT msg,
 			}
 
 			default:
-				TCHAR str[100] ;
+				/*TCHAR str[100] ;
 				wsprintf(str,TEXT("Команда с идентификатором %d не реализована"), wmId);
-				MessageBox(hWnd, str, _T("Неизвестно"), MB_OK);
+				MessageBox(hWnd, str, _T("Неизвестно"), MB_OK);*/
 				return DefWindowProc(hWnd, msg, wParam, lParam);
 			}
 			break;
