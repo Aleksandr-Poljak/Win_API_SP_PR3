@@ -15,6 +15,7 @@ LPCTSTR g_lpszDestroyMessage = TEXT("Поступило сообщение WM_DESTROY, из обработч
 	и выполнен данный вывод. Сообщение поступило в связи с разрушение мокна приложения");
 //Глобальная переменная для хранения дискриптера приложения.
 HINSTANCE g_hInst;
+HBRUSH hbr = CreateSolidBrush(RGB(0, 255, 0)); //Цвет фона
 
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine,
 	int nCmdShow)
@@ -22,7 +23,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 	WNDCLASSEX wc;
 	MSG msg;
 	HWND hWnd;
-	HBRUSH hbr = CreateSolidBrush(RGB(0, 255, 0));
 	g_hInst = hInstance;
 
 	memset(&wc, 0, sizeof(WNDCLASSEX));
@@ -123,6 +123,29 @@ LRESULT CALLBACK Pr2_WndProc(HWND hWnd, UINT msg,
 			MessageBox(NULL, g_lpszDestroyMessage, TEXT("Окно закрыто"), MB_OK);
 			PostQuitMessage(5);
 			break;
+
+		
+		case WM_MENUSELECT:
+		{
+			HDC hdc1;
+			TCHAR Buf[100];
+			HINSTANCE hInst = (HINSTANCE)GetWindowLong(hWnd, GWL_HINSTANCE);
+			int size = LoadString(hInst, LOWORD(wParam), Buf, 100);
+			hdc1 = GetDC(hWnd);
+			RECT rc;
+			GetClientRect(hWnd, &rc);
+
+			// Очищаем область вывода текста
+			RECT clearRect = { rc.left + 10, rc.bottom - 30, rc.right, rc.bottom };
+			FillRect(hdc1, &clearRect, hbr);
+
+			// Выводим новый текст
+			TextOut(hdc1, rc.left + 10, rc.bottom - 30, Buf, lstrlen(Buf));
+
+			ReleaseDC(hWnd, hdc1);
+			memset(Buf, 0, 100);
+			break;
+		}
 
 		// Вывод сообщения при  клике левой кнопкой мыши по координатам мыши
 		case WM_LBUTTONDOWN:
@@ -230,7 +253,7 @@ LRESULT CALLBACK Pr2_WndProc(HWND hWnd, UINT msg,
 				break;
 
 			case IDM_EDIT_SELECT:
-				MessageBox(hWnd, _T("Выбран пукт 'Выбрать'"), _T("Меню Правка"), MB_OK);
+				MessageBox(hWnd, _T("Выбран пукт 'Выбрать' "), _T("Меню Правка"), MB_OK);
 				break;
 
 			case IDM_EDIT_CUT:
