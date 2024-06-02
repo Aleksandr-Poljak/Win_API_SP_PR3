@@ -6,6 +6,7 @@
 #define IDI_ICON1                       105
 #define IDC_NODROP                      106
 #define IDR_MENU1                       108
+#define IDR_ACCELERATOR1                109
 #define ID_40004                        40004
 #define ID_40005                        40005
 #define ID_40006                        40006
@@ -26,13 +27,16 @@
 #define IDM_EDIT_INSERT                 40021
 #define IDM_REF_HELP                    40022
 #define IDM_REF_ABOUT                   40023
+#define IDA_ACCELERAT_R                 40027
+#define ID_ACCELERAT_T                  40028
+#define IDA_ACCELERAT_T                 40028
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        109
-#define _APS_NEXT_COMMAND_VALUE         40024
+#define _APS_NEXT_RESOURCE_VALUE        110
+#define _APS_NEXT_COMMAND_VALUE         40030
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

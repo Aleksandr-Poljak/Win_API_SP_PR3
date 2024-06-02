@@ -68,14 +68,19 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 	}
 
 	
-
+	HACCEL hAccel = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDR_ACCELERATOR1));
 
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
 	while (GetMessage(&msg, NULL, 0, 0)) {
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		{
+			if (!TranslateAccelerator(hWnd, hAccel, &msg))
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
 	}
 	return msg.wParam;
 
@@ -246,6 +251,14 @@ LRESULT CALLBACK Pr2_WndProc(HWND hWnd, UINT msg,
 
 			case IDM_REF_ABOUT:
 				MessageBox(hWnd, _T("Выбран пукт 'О программе'"), _T("Меню Справка"), MB_OK);
+				break;
+
+			case IDA_ACCELERAT_R:
+				MessageBox(hWnd, _T("Нажата горячая клавиша 'R'"), _T("R"), MB_OK);
+				break;
+
+			case IDA_ACCELERAT_T:
+				MessageBox(hWnd, _T("Нажата горячая клавиша 'T'"), _T("T"), MB_OK);
 				break;
 
 			default:
