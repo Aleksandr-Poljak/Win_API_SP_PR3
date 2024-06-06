@@ -128,11 +128,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="globals.cpp" />
     <ClCompile Include="sp_pr3.cpp" />
+    <ClCompile Include="wndProcFuncs.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="globals.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="sp_pr3.h" />
+    <ClInclude Include="wndProcFuncs.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="sp_pr3.rc" />

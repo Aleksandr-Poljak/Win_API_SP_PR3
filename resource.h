@@ -30,13 +30,18 @@
 #define IDA_ACCELERAT_R                 40027
 #define ID_ACCELERAT_T                  40028
 #define IDA_ACCELERAT_T                 40028
+#define IDC_BTN_SAVE					150
+#define IDC_BTN_ADD						151
+#define IDC_EDIT1						152
+#define IDC_LISTBOX						153
+#define IDM_FILE_CLOSE				    1234
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        110
-#define _APS_NEXT_COMMAND_VALUE         40030
+#define _APS_NEXT_COMMAND_VALUE         40031
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
